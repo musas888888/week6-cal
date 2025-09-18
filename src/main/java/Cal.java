@@ -9,6 +9,7 @@ public class Cal {
         return a * b;
     }
     public int divMe(int a, int b) {
-        return a / b;
+        if (b == 0) throw new ArithmeticException("Division by zero");
+        else return a / b;
     }
 }
