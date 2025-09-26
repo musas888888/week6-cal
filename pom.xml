@@ -12,36 +12,48 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Helpottaa versioiden hallintaa -->
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <surefire.plugin.version>3.5.1</surefire.plugin.version>
+        <jacoco.version>0.8.12</jacoco.version>
+        <jar.plugin.version>3.4.1</jar.plugin.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- JUnit 5 (Jupiter). Riittää testaukseen. -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.5.1</version>
-        </dependency>
     </dependencies>
+
     <build>
         <finalName>myapp</finalName>
         <plugins>
-            <!-- JaCoCo plugin for code coverage -->
+            <!-- Testien ajaminen JUnit 5:llä -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
+                <configuration>
+                    <!-- Etsi yleiset testitiedostonimet -->
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*TestCase.java</include>
+                    </includes>
+                    <!-- JUnit 5 toimii automaattisesti, kun junit-jupiter on riippuvuutena -->
+                </configuration>
+            </plugin>
+
+            <!-- Koodikattavuusraportti -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.12</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -58,36 +70,20 @@
                 </executions>
             </plugin>
 
-
-
+            <!-- Jar, jossa manifestiin merkitty pääluokka -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${jar.plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Myapp</mainClass> <!-- Correct main class -->
+                            <!-- Vaihda tähän oma pääluokka jos eri -->
+                            <mainClass>cal.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
-
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M7</version>
-                        <configuration>
-                            <includes>
-                                <include>**/*Test.java</include>
-                                <include>**/*Tests.java</include>
-                                <include>**/*TestCase.java</include>
-                            </includes>
-                        </configuration>
-                    </plugin>
-
-
         </plugins>
     </build>
 </project>
