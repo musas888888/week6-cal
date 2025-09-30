@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ADirin/week5_lectdemo_sep1.git'
+                git 'https://github.com/musas888888/week6-cal.git'
             }
         }
         stage('Build') {
