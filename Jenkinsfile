@@ -32,4 +32,27 @@ pipeline {
             }
         }
     }
+    post {
+      always {
+        // Listaa varmuudeksi build-kansiot (valinnainen)
+        bat 'dir target\\'
+        bat 'dir target\\site\\jacoco\\'
+
+        // Publish JUnit test results
+        junit '**/target/surefire-reports/*.xml'
+
+        // Publish JaCoCo HTML report (HTML Publisher -plugin tarvitaan)
+        publishHTML(target: [
+          reportDir:        'target/site/jacoco',
+          reportFiles:      'index.html',
+          reportName:       'JaCoCo Coverage Report',
+          alwaysLinkToLastBuild: true,
+          keepAll:          true,
+          allowMissing:     true
+        ])
+
+        echo 'Pipeline completed with tests and coverage.'
+      }
+    }
+
 }
