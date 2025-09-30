@@ -1,8 +1,6 @@
-
-
 public class Cal {
 
-    // --- käynnistyspiste ---
+
     public static void main(String[] args) {
         Cal c = new Cal();
         System.out.println("Hello from Cal!");
@@ -12,7 +10,7 @@ public class Cal {
         System.out.println("8 / 2 = " + c.divMe(8, 2));
     }
 
-    // --- logiikka ---
+
     public int addMe(int a, int b) { return a + b; }
     public int subMe(int a, int b) { return a - b; }
     public int mulMe(int a, int b) { return a * b; }
@@ -21,4 +19,5 @@ public class Cal {
         return a / b;
     }
 }
+
 
